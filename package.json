@@ -1,0 +1,11 @@
+{
+  "name": "tikdata",
+  "version": "1.0.0",
+  "description": "Data archiving tool that extracts TikTok user data into JSON for offline storage and analysis.",
+  "license": "MIT",
+  "author": "Saku (saq.fi)",
+  "type": "module",
+  "scripts": {
+    "test": "node --env-file=.env ./scripts/test.js"
+  }
+}
