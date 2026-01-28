@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>TikData Statistics</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body style="max-width: 768px">
+  <h1>TikData Statistics</h1>
+
+  <section>
+    <h2>Author Followers</h2>
+    <p>Most followed: <span id="most-followed"></span></p>
+    <p>Least followed: <span id="least-followed"></span></p>
+    <p>Average followers: <span id="avg-followers"></span></p>
+  </section>
+
+  <section>
+    <h2>Liked Videos per Month</h2>
+    <canvas id="monthlyChart" width="800" height="400"></canvas>
+  </section>
+
+  <section>
+    <h2>Hashtags Usage</h2>
+    <canvas id="hashtagsChart" width="800" height="400"></canvas>
+  </section>
+
+  <section>
+    <h2>Advertisement Videos</h2>
+    <p>Total ads: <span id="ad-total"></span></p>
+    <p>Percentage: <span id="ad-percentage"></span>%</p>
+  </section>
+
+  <script type="module" src="statistics.js"></script>
+</body>
+</html>

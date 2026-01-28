@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 import { Command } from "commander";
-import { fetchLikedVideos } from "../lib/parser.js"; 
+import { fetchLikedVideos } from "../lib/parser.js";
 import fs from "fs";
 import path from "path";
 import ora from "ora";

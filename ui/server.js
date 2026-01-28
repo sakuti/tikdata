@@ -23,6 +23,21 @@ app.get("/api/exports/:file", (req, res) => {
     }
 });
 
+app.get("/api/statistics", (req, res) => {
+    const statsFile = path.join(process.cwd(), "exports", "/statistics.json");
+    if (fs.existsSync(statsFile)) {
+        const stats = JSON.parse(fs.readFileSync(statsFile, "utf-8"));
+        res.json(stats);
+    } else {
+        res.status(404).json({ error: "Statistics not found" });
+    }
+});
+
+app.get("/statistics", (req, res) => {
+    res.sendFile(path.join(process.cwd(), "./ui/public/statistics.html"));
+});
+
+
 app.listen(PORT, () => {
     console.log(`Server running at http://localhost:${PORT}`);
 });

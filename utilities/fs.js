@@ -19,6 +19,9 @@ export function ensurePath(baseDir, ...subPaths) {
 
 
 export function createRequiredDirectories() {
-    const requiredDirectories = ["exports"]
-    return ensurePath(process.cwd(), ...requiredDirectories);
+    const requiredDirectories = ["exports", "exports/audio", "exports/video"]
+    
+    requiredDirectories.forEach(rd => {
+        ensurePath(process.cwd(), rd)
+    })
 }
