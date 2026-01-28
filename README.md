@@ -33,6 +33,11 @@ This version of TikData is an early prototype. Currently, it only supports the t
     - secuid_value
     - mstoken_value
 
+4. Install node dependencies:
+    ```
+    npm i
+    ```
+
 ## Test command
 Run `npm run test` and expect the following outputs
 

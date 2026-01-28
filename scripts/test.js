@@ -1,4 +1,4 @@
-import { fetchLikedVideos } from "./parser.js";
+import { fetchLikedVideos } from "../lib/parser.js";
 import { timeAgoFromUnix } from "../utilities/datetime.js"
 
 
