@@ -7,9 +7,11 @@
   "type": "module",
   "scripts": {
     "test": "node --env-file=.env ./scripts/test.js",
-    "export": "node --env-file=.env ./scripts/export.js"
+    "export": "node --env-file=.env ./scripts/export.js",
+    "web": "node ./ui/server.js"
   },
   "dependencies": {
-    "commander": "^14.0.2"
+    "commander": "^14.0.2",
+    "express": "^5.2.1"
   }
 }
