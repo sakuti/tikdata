@@ -4,7 +4,6 @@ import { Command } from "commander";
 import fs from "fs";
 import path from "path";
 import ora from "ora";
-import { createRequiredDirectories } from "../utilities/fs.js";
 import { computeAuthorStats } from "../lib/statistics.js";
 
 const program = new Command();
@@ -18,8 +17,6 @@ program
     .argument("<file>", "JSON file to read exported liked videos from")
     .action(async (file) => {
         try {
-            createRequiredDirectories();
-
             const inputPath = path.resolve(file);
             if (!fs.existsSync(inputPath)) {
                 console.error(`File not found: ${inputPath}`);
@@ -38,7 +35,7 @@ program
 
             spinner.succeed("Statistics computation complete");
 
-            const outputPath = path.join("./exports", "statistics.json");
+            const outputPath = path.join("./interface/public/exports", "statistics.json");
             fs.writeFileSync(outputPath, JSON.stringify(statistics, null, 2));
             console.log(`Statistics saved to ${outputPath}`);
 

@@ -1,3 +1,4 @@
 *.env
 /node_modules
-/exports
+/interface/public/exports/**
+!/interface/public/exports/README.md

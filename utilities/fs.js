@@ -16,12 +16,3 @@ export function ensurePath(baseDir, ...subPaths) {
     ensureDir(fullPath);
     return fullPath;
 }
-
-
-export function createRequiredDirectories() {
-    const requiredDirectories = ["exports", "exports/audio", "exports/video"]
-    
-    requiredDirectories.forEach(rd => {
-        ensurePath(process.cwd(), rd)
-    })
-}

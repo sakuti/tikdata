@@ -5,7 +5,6 @@ import { fetchLikedVideos } from "../lib/parser.js";
 import fs from "fs";
 import path from "path";
 import ora from "ora";
-import { createRequiredDirectories } from "../utilities/fs.js";
 
 const program = new Command();
 
@@ -18,9 +17,6 @@ program
   .argument("<count>", 'Number of videos to download (number or "all")')
   .action(async (count) => {
     try {
-      // Ensure that required directories exist
-      createRequiredDirectories();
-
       let totalToFetch;
 
       if (count.toLowerCase() === "all") {
@@ -33,7 +29,7 @@ program
         }
       }
 
-      const outputFile = path.join("./exports", `liked_videos_${Date.now()}.json`);
+      const outputFile = path.join("./interface/public/exports", `liked_videos_${Date.now()}.json`);
       console.log(`Fetching up to ${count} liked videos...`);
 
       let allVideos = [];
