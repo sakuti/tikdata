@@ -5,6 +5,9 @@
   "license": "MIT",
   "author": "Saku (saq.fi)",
   "type": "module",
+  "workspaces": [
+    "apps/*"
+  ],
   "scripts": {
     "test": "node --env-file=.env ./scripts/test.js",
     "export": "node --env-file=.env ./scripts/export.js",
