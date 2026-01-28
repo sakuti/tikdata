@@ -3,6 +3,7 @@
 import { Command } from "commander";
 import { fetchLikedVideos } from "../lib/parser.js"; 
 import fs from "fs";
+import { createRequiredDirectories } from "../utilities/fs.js";
 
 const program = new Command();
 
@@ -15,6 +16,9 @@ program
     .argument("<count>", 'Number of videos to download (number or "all")')
     .action(async (count) => {
         try {
+            // Ensure that required directories exist
+            createRequiredDirectories()
+
             let totalToFetch;
 
             if (count.toLowerCase() === "all") {
