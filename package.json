@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "commander": "^14.0.2",
-    "express": "^5.2.1"
+    "express": "^5.2.1",
+    "ora": "^9.1.0"
   }
 }
