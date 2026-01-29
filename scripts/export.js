@@ -31,7 +31,7 @@ program
 
       const outputFile = path.join(
         "./interface/public/exports",
-        `liked_videos_${Date.now()}.json`,
+        `liked_videos.json`,
       );
       console.log(`Fetching up to ${count} liked videos...`);
 

@@ -18,7 +18,7 @@ export function useVideos() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    fetch("/exports/liked_videos_all.json")
+    fetch("/exports/liked_videos.json")
       .then((res) => res.json())
       .then((data) => {
         setAllVideos(data);
