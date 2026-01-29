@@ -8,10 +8,9 @@
   "scripts": {
     "test": "node --env-file=.env ./scripts/test.js",
     "export": "node --env-file=.env ./scripts/export.js",
-    "generate-statistics": "node ./scripts/generate-statistics.js",
     "web-dev": "cd interface && npm run dev",
     "web-build": "cd interface && npm run build",
-    "web-start": "node ./interface/server.js"
+    "web-start": "cd interface && npm run start"
   },
   "dependencies": {
     "commander": "^14.0.2",
