@@ -7,10 +7,10 @@ const BATCH_SIZE = 24;
 export default function VideosPage() {
   const [allVideos, setAllVideos] = useState([]);
   const [visibleVideos, setVisibleVideos] = useState([]);
+  const [allVisible, setAllVisible] = useState<boolean>(false);
   const loaderRef = useRef(null);
   const cursorRef = useRef(0);
 
-  // Fetch JSON once
   useEffect(() => {
     fetch("/exports/liked_videos_all.json")
       .then(res => res.json())
@@ -37,12 +37,18 @@ export default function VideosPage() {
   }, [allVideos]);
 
   const loadMore = () => {
+    if(allVisible) return;
+
     const start = cursorRef.current;
     const end = start + BATCH_SIZE;
 
     const nextBatch = allVideos.slice(start, end);
 
     cursorRef.current = end;
+
+    if(allVideos.length !== 0 && end >= allVideos.length) {
+      setAllVisible(true)
+    }
 
     setVisibleVideos(prev => [...prev, ...nextBatch]);
   };
@@ -57,9 +63,11 @@ export default function VideosPage() {
         ))}
       </div>
 
-      <div ref={loaderRef}>
-        <p className="text-center">Loading more...</p>
-      </div>
+      {!allVisible ? (
+        <div ref={loaderRef}>
+          <p className="text-center">Loading more...</p>
+        </div>
+      ) : <></>}
     </main>
   );
 }
@@ -67,13 +75,6 @@ export default function VideosPage() {
 function VideoCard({ video }: { video: any }) {
   return (
     <article className="bg-zinc-100 rounded-md p-3 flex flex-col justify-between">
-      <img
-        src={video.video?.cover}
-        alt={video.desc}
-        className="aspect-auto max-w-full rounded-md"
-        loading="lazy"
-      />
-
       <div className="flex flex-col gap-2">
         <strong>{video.author?.nickname}</strong>
         <p className="truncate">{video.desc}</p>
