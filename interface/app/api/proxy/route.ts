@@ -13,7 +13,10 @@ export async function GET(request: NextRequest) {
     // Validate URL
     const parsedUrl = new URL(decodedUrl);
     if (!["http:", "https:"].includes(parsedUrl.protocol)) {
-      return NextResponse.json({ error: "Invalid URL protocol" }, { status: 400 });
+      return NextResponse.json(
+        { error: "Invalid URL protocol" },
+        { status: 400 },
+      );
     }
 
     const response = await fetch(decodedUrl, {
@@ -29,11 +32,12 @@ export async function GET(request: NextRequest) {
     if (!response.ok) {
       return NextResponse.json(
         { error: `Failed to fetch: ${response.status}` },
-        { status: response.status }
+        { status: response.status },
       );
     }
 
-    const contentType = response.headers.get("content-type") || "application/octet-stream";
+    const contentType =
+      response.headers.get("content-type") || "application/octet-stream";
     const contentLength = response.headers.get("content-length");
 
     const headers = new Headers({
@@ -57,7 +61,7 @@ export async function GET(request: NextRequest) {
     console.error("Proxy error:", error);
     return NextResponse.json(
       { error: "Failed to proxy request" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

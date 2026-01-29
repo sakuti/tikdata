@@ -51,7 +51,7 @@ async function downloadFile(url: string, filename: string, useProxy = false) {
 
 async function downloadImagesAsZip(
   images: string[],
-  zipFilename: string
+  zipFilename: string,
 ): Promise<void> {
   const JSZip = (await import("jszip")).default;
   const zip = new JSZip();
@@ -110,7 +110,7 @@ export function MediaEmbed({ video }: MediaEmbedProps) {
     try {
       await downloadFile(
         images[currentImageIndex],
-        `${video.id}_image_${currentImageIndex + 1}.jpg`
+        `${video.id}_image_${currentImageIndex + 1}.jpg`,
       );
     } finally {
       setIsDownloading(false);

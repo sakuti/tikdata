@@ -2,12 +2,30 @@
 
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Heart, MessageCircle, Share2, Play, Clock, User, ExternalLink, Hash, Calendar, BarChart3, FileDigit } from "lucide-react";
+import {
+  Heart,
+  MessageCircle,
+  Share2,
+  Play,
+  Clock,
+  User,
+  ExternalLink,
+  Hash,
+  Calendar,
+  BarChart3,
+  FileDigit,
+} from "lucide-react";
 import type { Video } from "@/types/video";
 import { Skeleton } from "./ui/skeleton";
 import { Separator } from "./ui/separator";
 import Image from "next/image";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "./ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "./ui/dialog";
 import { ScrollArea } from "./ui/scroll-area";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { MediaEmbed } from "./media-embed";
@@ -120,7 +138,9 @@ function VideoDetailDialog({ video }: { video: Video }) {
                             src={video.author?.avatarThumb}
                             alt={`@${video.author?.uniqueId}`}
                           />
-                          <AvatarFallback><User className="w-4 h-4" /></AvatarFallback>
+                          <AvatarFallback>
+                            <User className="w-4 h-4" />
+                          </AvatarFallback>
                         </Avatar>
                       </div>
                       <div className="flex-1 min-w-0">
@@ -131,7 +151,9 @@ function VideoDetailDialog({ video }: { video: Video }) {
                           @{video.author?.uniqueId || "unknown"}
                         </p>
                       </div>
-                      {video.isAd && <Badge variant="secondary">Sponsored</Badge>}
+                      {video.isAd && (
+                        <Badge variant="secondary">Sponsored</Badge>
+                      )}
                     </div>
                     {video.author?.id && (
                       <p className="text-xs text-muted-foreground mt-3 pt-3 border-t">
@@ -232,7 +254,9 @@ function VideoDetailDialog({ video }: { video: Video }) {
                       icon={MessageCircle}
                       label="Comments"
                       value={formatNumber(video.stats?.commentCount || 0)}
-                      subValue={formatNumberFull(video.stats?.commentCount || 0)}
+                      subValue={formatNumberFull(
+                        video.stats?.commentCount || 0,
+                      )}
                     />
                     <StatItem
                       icon={Share2}
@@ -247,7 +271,15 @@ function VideoDetailDialog({ video }: { video: Video }) {
                     <StatItem
                       icon={Share2}
                       label="Engagement Rate"
-                      value={(((video.stats.diggCount + video.stats.commentCount + video.stats.shareCount) / video.stats.playCount) * 100).toFixed(2)+ "%"}
+                      value={
+                        (
+                          ((video.stats.diggCount +
+                            video.stats.commentCount +
+                            video.stats.shareCount) /
+                            video.stats.playCount) *
+                          100
+                        ).toFixed(2) + "%"
+                      }
                     />
                   )}
                 </section>
@@ -269,7 +301,6 @@ export function VideoCard({ video }: VideoCardProps) {
     <Dialog>
       <DialogTrigger asChild>
         <div className="border flex flex-col rounded-none p-4 space-y-3 hover:border-neutral-700 hover:brightness-125 hover:bg-neutral-950 hover:cursor-pointer select-none">
-
           <div className="grid grid-cols-4 gap-6">
             <div className="h-full col-span-3 flex flex-col gap-3">
               <div className="flex items-center justify-between">

@@ -28,7 +28,7 @@ function VideoCardSkeleton() {
           <Skeleton className="overflow-hidden w-full h-full max-h-29 relative"></Skeleton>
         </div>
       </div>
-      
+
       <div className="grid grid-cols-4 place-items-center pt-2 gap-2 text-xs text-muted-foreground">
         <Skeleton className="h-4 w-12" />
         <Skeleton className="h-4 w-12" />
