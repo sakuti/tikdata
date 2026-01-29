@@ -240,6 +240,7 @@ export function useVideoFilters(videos: Video[]) {
       // Duration filter
       const duration = video.video?.duration || 0;
       if (
+        duration !== 0 &&
         duration < filters.durationRange[0] ||
         duration > filters.durationRange[1]
       ) {
