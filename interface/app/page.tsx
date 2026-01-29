@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 
-const BATCH_SIZE = 24;
+const BATCH_SIZE = 48;
 
 export default function VideosPage() {
   const [allVideos, setAllVideos] = useState([]);
@@ -55,8 +55,6 @@ export default function VideosPage() {
 
   return (
     <main className="p-12 pb-64 flex flex-col gap-8">
-      <h1 className="pb-12 font-semibold text-xl">Liked Videos</h1>
-
       <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 xl:grid-cols-8 gap-2">
         {visibleVideos.map((video: any) => (
           <VideoCard key={video.id} video={video} />
