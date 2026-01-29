@@ -14,4 +14,4 @@ https://github.com/user-attachments/assets/73c1646d-1619-4ffe-b554-ffaaeb619b64
 
 ## Notice
 
-This version of TikData is an early prototype. Currently, it only supports the test command, which verifies that your environment is set up correctly and that TikTok data can be retrieved. There will be more features soon. The test command does not download or archive full datasets yet. <u>Future versions will include full liked video export, categorization, and local JSON storage.</u>
+This version of TikData is an early prototype. Currently, it only has functionality to view all liked videos, click on specific one to view more details, and download images or videos. There will be more features at some point.
