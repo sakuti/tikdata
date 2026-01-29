@@ -10,7 +10,7 @@ Data archiving tool that extracts TikTok user data into JSON for offline storage
 
 ## Showcase
 
-https://github.com/sakuti/tikdata/blob/6a706ebc93201905162450830c83aadedaceb935/showcase.mp4
+https://github.com/sakuti/tikdata/raw/refs/heads/main/showcase.mp4
 
 ## Notice
 
