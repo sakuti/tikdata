@@ -29,7 +29,10 @@ program
         }
       }
 
-      const outputFile = path.join("./interface/public/exports", `liked_videos_${Date.now()}.json`);
+      const outputFile = path.join(
+        "./interface/public/exports",
+        `liked_videos_${Date.now()}.json`,
+      );
       console.log(`Fetching up to ${count} liked videos...`);
 
       let allVideos = [];
@@ -71,12 +74,13 @@ program
         }
       }
 
-      spinner.succeed(`Finished fetching ${allVideos.length} video${allVideos.length !== 1 ? "s" : ""}`);
+      spinner.succeed(
+        `Finished fetching ${allVideos.length} video${allVideos.length !== 1 ? "s" : ""}`,
+      );
 
       // Write JSON file
       fs.writeFileSync(outputFile, JSON.stringify(allVideos, null, 2));
       console.log(`Saved ${allVideos.length} videos to ${outputFile}`);
-
     } catch (err) {
       console.error("Error fetching liked videos:", err.message);
     }

@@ -1,112 +1,99 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-
-const BATCH_SIZE = 48;
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { FiltersSidebar } from "@/components/filters-sidebar";
+import { MobileFilters } from "@/components/mobile-filters";
+import { VideoGrid } from "@/components/video-grid";
+import {
+  useVideos,
+  useVideoMetadata,
+  useVideoFilters,
+  useInfiniteScroll,
+} from "@/hooks/use-videos";
 
 export default function VideosPage() {
-  const [allVideos, setAllVideos] = useState([]);
-  const [visibleVideos, setVisibleVideos] = useState([]);
-  const [allVisible, setAllVisible] = useState<boolean>(false);
-  const loaderRef = useRef(null);
-  const cursorRef = useRef(0);
+  const { allVideos, isLoading, error } = useVideos();
 
-  useEffect(() => {
-    fetch("/exports/liked_videos_all.json")
-      .then(res => res.json())
-      .then(data => {
-        setAllVideos(data);
-        setVisibleVideos(data.slice(0, BATCH_SIZE));
-        cursorRef.current = BATCH_SIZE;
-      })
-      .catch(err => console.error("Failed to load videos", err));
-  }, []);
+  const {
+    filters,
+    filteredVideos,
+    setSelectedAuthor,
+    setSelectedHashtag,
+    setAdOnly,
+    setDateRange,
+    setDurationRange,
+    resetFilters,
+    durationBounds,
+  } = useVideoFilters(allVideos);
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      entries => {
-        if (entries[0].isIntersecting) {
-          loadMore();
-        }
-      },
-      { rootMargin: "100px" }
-    );
+  // Pass selected filters for cross-filtering options
+  const { authorOptions, hashtagOptions, dateBounds } = useVideoMetadata(
+    allVideos,
+    filters.selectedAuthor,
+    filters.selectedHashtag,
+  );
 
-    if (loaderRef.current) observer.observe(loaderRef.current);
-    return () => observer.disconnect();
-  }, [allVideos]);
+  const { visibleVideos, allVisible, loaderRef } =
+    useInfiniteScroll(filteredVideos);
 
-  const loadMore = () => {
-    if (allVisible) return;
-
-    const start = cursorRef.current;
-    const end = start + BATCH_SIZE;
-    const nextBatch = allVideos.slice(start, end);
-    cursorRef.current = end;
-
-    if (allVideos.length !== 0 && end >= allVideos.length) {
-      setAllVisible(true)
-    }
-
-    setVisibleVideos(prev => [...prev, ...nextBatch]);
+  const filterProps = {
+    filters,
+    authorOptions,
+    hashtagOptions,
+    durationBounds,
+    dateBounds,
+    onAuthorChange: setSelectedAuthor,
+    onHashtagChange: setSelectedHashtag,
+    onAdOnlyChange: setAdOnly,
+    onDateRangeChange: setDateRange,
+    onDurationRangeChange: setDurationRange,
+    onReset: resetFilters,
+    totalCount: allVideos.length,
+    filteredCount: filteredVideos.length,
   };
 
-  return (
-    <div className="relative">
-      <header className="border-b border-neutral-800 h-16 bg-neutral-900 fixed top-0 z-50 w-full">
-        <div className="hidden h-full grid-cols-[1fr_3fr_1fr] items-center gap-4 md:grid max-w-full py-3 px-6 w-full mx-auto">
-          <div>TikData</div>
-          <div className="mx-auto flex w-full">x</div>
-          <div className="flex items-center gap-2 justify-self-end">r</div>
+  if (error) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="text-center">
+          <h2 className="text-lg font-semibold text-destructive">Error</h2>
+          <p className="text-muted-foreground">{error}</p>
         </div>
+      </div>
+    );
+  }
 
-        <div className="flex h-full items-center md:hidden justify-between max-w-full py-6 px-4 w-full mx-auto pt-8">
-          <div className="flex items-center gap-1">
-            TikData
-          </div>
-          <div className="flex items-center gap-1">
-            x
+  return (
+    <div className="relative min-h-screen">
+      <header className="border-b h-16 bg-background fixed top-0 z-50 w-full">
+        <div className="h-full flex items-center justify-between gap-4 px-4 md:px-6">
+          <h1 className="text-xl font-bold">TikData</h1>
+          <div className="flex items-center gap-2">
+            <MobileFilters {...filterProps} />
           </div>
         </div>
       </header>
 
       <main className="xl:flex xl:gap-0">
-        <aside className="sticky top-16 hidden h-[calc(100vh-4rem)] overflow-hidden xl:block w-90">
-          <nav className="w-90 overflow-y-auto px-6 pt-8">
-            <p className="text-sm">Total videos rendered: {visibleVideos.length} of {allVideos.length}</p>
-          </nav>
+        <aside className="sticky top-16 hidden h-[calc(100vh-4rem)] xl:block w-80 shrink-0 border-r">
+          <ScrollArea className="h-full">
+            <nav className="px-6 py-6">
+              <FiltersSidebar {...filterProps} />
+            </nav>
+          </ScrollArea>
         </aside>
 
-        <div className="relative top-16 min-w-0 flex-1 pb-32 pt-8 px-4">
+        <div className="relative top-16 min-w-0 flex-1 pb-32 pt-6 px-4">
           <div className="mx-auto">
-            <div className="col-span-5">
-              <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-2">
-                {visibleVideos.map((video: any) => (
-                  <VideoCard key={video.id} video={video} />
-                ))}
-              </div>
-
-              {!allVisible ? (
-                <div ref={loaderRef}>
-                  <p className="text-center">Loading more...</p>
-                </div>
-              ) : <></>}
-            </div>
+            <VideoGrid
+              videos={visibleVideos}
+              allVisible={allVisible}
+              loaderRef={loaderRef}
+              isLoading={isLoading}
+            />
           </div>
         </div>
       </main>
     </div>
-  )
-}
-
-function VideoCard({ video }: { video: any }) {
-  return (
-    <article className="border border-neutral-800 rounded-md p-3 flex flex-col justify-between">
-      <div className="flex flex-col gap-2">
-        <strong>{video.author?.nickname}</strong>
-        <p className="truncate">{video.desc}</p>
-        <span>❤️ {video.stats?.diggCount}</span>
-      </div>
-    </article>
   );
 }

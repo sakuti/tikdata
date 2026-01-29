@@ -12,7 +12,6 @@
     "web-dev": "cd interface && npm run dev",
     "web-build": "cd interface && npm run build",
     "web-start": "node ./interface/server.js"
-  
   },
   "dependencies": {
     "commander": "^14.0.2",
