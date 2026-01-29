@@ -14,23 +14,31 @@ interface VideoGridProps {
 
 function VideoCardSkeleton() {
   return (
-    <div className="border rounded-lg p-4 space-y-3">
-      <div className="flex items-center justify-between">
-        <Skeleton className="h-4 w-24" />
-        <Skeleton className="h-5 w-10" />
+    <div className="border flex flex-col rounded-none p-4 space-y-3">
+      <div className="grid grid-cols-4 gap-6">
+        <div className="h-full col-span-3 flex flex-col gap-3">
+          <div className="flex items-center justify-between">
+            <Skeleton className="h-5 w-24" />
+          </div>
+          <Skeleton className="h-3 w-20" />
+          <Skeleton className="h-10 w-full" />
+        </div>
+
+        <div>
+          <Skeleton className="overflow-hidden w-full h-full max-h-29 relative"></Skeleton>
+        </div>
       </div>
-      <Skeleton className="h-3 w-20" />
-      <Skeleton className="h-10 w-full" />
-      <div className="flex gap-1">
-        <Skeleton className="h-5 w-16" />
-        <Skeleton className="h-5 w-20" />
+      
+      <div className="grid grid-cols-4 place-items-center pt-2 gap-2 text-xs text-muted-foreground">
+        <Skeleton className="h-4 w-12" />
+        <Skeleton className="h-4 w-12" />
+        <Skeleton className="h-4 w-12" />
+        <Skeleton className="h-4 w-12" />
       </div>
-      <Skeleton className="h-px w-full" />
-      <div className="grid grid-cols-4 pt-2 gap-2">
-        <Skeleton className="h-4 w-12" />
-        <Skeleton className="h-4 w-12" />
-        <Skeleton className="h-4 w-12" />
-        <Skeleton className="h-4 w-12" />
+
+      <div className="flex flex-row-reverse mt-4 gap-2 min-h-5.5">
+        <Skeleton className="h-6.5 w-16" />
+        <Skeleton className="h-6.5 w-20" />
       </div>
     </div>
   );

@@ -57,11 +57,11 @@ export function MobileFilters(props: MobileFiltersProps) {
           )}
         </Button>
       </SheetTrigger>
-      <SheetContent side="left" className="w-75 sm:w-100">
-        <SheetHeader>
-          <SheetTitle>Filters</SheetTitle>
-        </SheetHeader>
-        <ScrollArea className="h-[calc(100vh-5rem)] mt-4 pr-4">
+      <SheetTitle className="sr-only">
+        <span>Filters</span>
+      </SheetTitle>
+      <SheetContent side="left" className="pl-8 pr-4 w-100 xl:hidden">
+        <ScrollArea className="h-[calc(100vh-5rem)] pt-8 mt-4 pr-4">
           <FiltersSidebar {...props} />
         </ScrollArea>
       </SheetContent>
