@@ -12,11 +12,28 @@ export interface VideoStats {
   playCount: number;
 }
 
+export interface VideoPlayAddr {
+  urlList: string[];
+}
+
+export interface ImageURL {
+  urlList: string[];
+}
+
+export interface ImagePostImage {
+  imageURL: ImageURL;
+}
+
+export interface ImagePost {
+  images: ImagePostImage[];
+}
+
 export interface Video {
   id: string;
   desc: string;
   createTime: number;
   video: {
+    playAddr: string;
     duration: number;
     cover: string;
     zoomCover: {
@@ -32,6 +49,7 @@ export interface Video {
   textExtra?: Array<{
     hashtagName?: string;
   }>;
+  imagePost?: ImagePost;
 }
 
 export interface AuthorOption {

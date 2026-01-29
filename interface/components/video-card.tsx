@@ -10,6 +10,7 @@ import Image from "next/image";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "./ui/dialog";
 import { ScrollArea } from "./ui/scroll-area";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
+import { MediaEmbed } from "./media-embed";
 
 interface VideoCardProps {
   video: Video;
@@ -101,162 +102,157 @@ function VideoDetailDialog({ video }: { video: Video }) {
       </DialogHeader>
 
       <div className="overflow-scroll px-6 backdrop-blur-2xl">
-        <ScrollArea className="grid grid-cols-4 flex-1 p-12">
-          <div className="space-y-6 pt-4">
-            {/* Author Section */}
-            <section className="space-y-3">
-              <div className="p-4 rounded-lg border bg-card">
-                <div className="flex items-center gap-3">
-                  <div className="bg-muted flex items-center justify-center">
-                    <Avatar className="rounded-none w-12 h-12">
-                      <AvatarImage
-                        src={video.author?.avatarThumb}
-                        alt={`@${video.author?.uniqueId}`}
-                      />
-                      <AvatarFallback><User className="w-4 h-4" /></AvatarFallback>
-                    </Avatar>
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <p className="font-semibold truncate">
-                      {video.author?.nickname || "Unknown"}
-                    </p>
-                    <p className="text-sm text-muted-foreground truncate">
-                      @{video.author?.uniqueId || "unknown"}
-                    </p>
-                  </div>
-                  {video.isAd && <Badge variant="secondary">Sponsored</Badge>}
-                </div>
-                {video.author?.id && (
-                  <p className="text-xs text-muted-foreground mt-3 pt-3 border-t">
-                    Author ID: {video.author.id}
-                  </p>
-                )}
-              </div>
-            </section>
+        <ScrollArea className="flex flex-1 p-12">
+          <div className="flex-1 flex flex-col md:grid md:grid-cols-4 gap-8">
+            <div className="col-span-2">
+              <MediaEmbed video={video} />
+            </div>
 
-            <Separator />
-
-            {/* Description Section */}
-            <section className="space-y-3">
-              <div className="flex items-center gap-2 text-sm font-medium text-muted-foreground">
-                <ExternalLink className="h-4 w-4" />
-                <span>Description</span>
-              </div>
-              <div className="p-4 rounded-lg border bg-card">
-                <p className="text-sm whitespace-pre-wrap">
-                  {video.desc || "No description available"}
-                </p>
-              </div>
-            </section>
-
-            <Separator />
-
-            {/* Hashtags Section */}
-            {allHashtags && allHashtags.length > 0 && (
-              <>
+            <div className="col-span-2">
+              <div className="space-y-6 pt-4">
+                {/* Author Section */}
                 <section className="space-y-3">
-                  <div className="flex items-center gap-2 text-sm font-medium text-muted-foreground">
-                    <Hash className="h-4 w-4" />
-                    <span>Hashtags ({allHashtags.length})</span>
-                  </div>
-                  <div className="flex flex-wrap gap-2">
-                    {allHashtags.map((extra, index) => (
-                      <Badge
-                        key={`${extra.hashtagName}-${index}`}
-                        variant="outline"
-                        className="text-sm"
-                      >
-                        #{extra.hashtagName}
-                      </Badge>
-                    ))}
+                  <div className="p-4 rounded-lg border bg-card">
+                    <div className="flex items-center gap-3">
+                      <div className="bg-muted flex items-center justify-center">
+                        <Avatar className="rounded-none w-12 h-12">
+                          <AvatarImage
+                            src={video.author?.avatarThumb}
+                            alt={`@${video.author?.uniqueId}`}
+                          />
+                          <AvatarFallback><User className="w-4 h-4" /></AvatarFallback>
+                        </Avatar>
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <p className="font-semibold truncate">
+                          {video.author?.nickname || "Unknown"}
+                        </p>
+                        <p className="text-sm text-muted-foreground truncate">
+                          @{video.author?.uniqueId || "unknown"}
+                        </p>
+                      </div>
+                      {video.isAd && <Badge variant="secondary">Sponsored</Badge>}
+                    </div>
+                    {video.author?.id && (
+                      <p className="text-xs text-muted-foreground mt-3 pt-3 border-t">
+                        Author ID: {video.author.id}
+                      </p>
+                    )}
                   </div>
                 </section>
+
                 <Separator />
-              </>
-            )}
 
-            {/* Video Info Section */}
-            <section className="space-y-3">
-              <div className="flex items-center gap-2 text-sm font-medium text-muted-foreground">
-                <Calendar className="h-4 w-4" />
-                <span>Video Information</span>
-              </div>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                <StatItem
-                  icon={Calendar}
-                  label="Posted "
-                  value={formatDateFull(video.createTime)}
-                />
-                <StatItem
-                  icon={Clock}
-                  label="Duration"
-                  value={formatDurationFull(video.video?.duration || 0)}
-                />
-                <StatItem
-                  icon={FileDigit}
-                  label="Video ID"
-                  value={video.id}
-                />
-              </div>
-            </section>
+                {/* Description Section */}
+                <section className="space-y-3">
+                  <div className="flex items-center gap-2 text-sm font-medium text-muted-foreground">
+                    <ExternalLink className="h-4 w-4" />
+                    <span>Description</span>
+                  </div>
+                  <div className="p-4 rounded-lg border bg-card">
+                    <p className="text-sm whitespace-pre-wrap">
+                      {video.desc || "No description available"}
+                    </p>
+                  </div>
+                </section>
 
-            <Separator />
+                <Separator />
 
-            {/* Stats Section */}
-            <section className="space-y-3">
-              <div className="flex items-center gap-2 text-sm font-medium text-muted-foreground">
-                <BarChart3 className="h-4 w-4" />
-                <span>Engagement Statistics</span>
-              </div>
-              <div className="grid grid-cols-2 gap-3">
-                <StatItem
-                  icon={Play}
-                  label="Views"
-                  value={formatNumber(video.stats?.playCount || 0)}
-                  subValue={formatNumberFull(video.stats?.playCount || 0)}
-                />
-                <StatItem
-                  icon={Heart}
-                  label="Likes"
-                  value={formatNumber(video.stats?.diggCount || 0)}
-                  subValue={formatNumberFull(video.stats?.diggCount || 0)}
-                />
-                <StatItem
-                  icon={MessageCircle}
-                  label="Comments"
-                  value={formatNumber(video.stats?.commentCount || 0)}
-                  subValue={formatNumberFull(video.stats?.commentCount || 0)}
-                />
-                <StatItem
-                  icon={Share2}
-                  label="Shares"
-                  value={formatNumber(video.stats?.shareCount || 0)}
-                  subValue={formatNumberFull(video.stats?.shareCount || 0)}
-                />
-              </div>
+                {/* Hashtags Section */}
+                {allHashtags && allHashtags.length > 0 && (
+                  <>
+                    <section className="space-y-3">
+                      <div className="flex items-center gap-2 text-sm font-medium text-muted-foreground">
+                        <Hash className="h-4 w-4" />
+                        <span>Hashtags ({allHashtags.length})</span>
+                      </div>
+                      <div className="flex flex-wrap gap-2">
+                        {allHashtags.map((extra, index) => (
+                          <Badge
+                            key={`${extra.hashtagName}-${index}`}
+                            variant="outline"
+                            className="text-sm"
+                          >
+                            #{extra.hashtagName}
+                          </Badge>
+                        ))}
+                      </div>
+                    </section>
+                    <Separator />
+                  </>
+                )}
 
-              {/* Engagement Rate */}
-              {video.stats?.playCount && video.stats.playCount > 0 && (
-                <div className="p-4 rounded-lg border bg-card mt-3">
-                  <p className="text-xs text-muted-foreground mb-1">
-                    Engagement Rate
-                  </p>
-                  <p className="font-semibold">
-                    {(
-                      ((video.stats.diggCount +
-                        video.stats.commentCount +
-                        video.stats.shareCount) /
-                        video.stats.playCount) *
-                      100
-                    ).toFixed(2)}
-                    %
-                  </p>
-                  <p className="text-xs text-muted-foreground mt-1">
-                    (Likes + Comments + Shares) / Views
-                  </p>
-                </div>
-              )}
-            </section>
+                {/* Video Info Section */}
+                <section className="space-y-3">
+                  <div className="flex items-center gap-2 text-sm font-medium text-muted-foreground">
+                    <Calendar className="h-4 w-4" />
+                    <span>Video Information</span>
+                  </div>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <StatItem
+                      icon={Calendar}
+                      label="Posted "
+                      value={formatDateFull(video.createTime)}
+                    />
+                    <StatItem
+                      icon={Clock}
+                      label="Duration"
+                      value={formatDurationFull(video.video?.duration || 0)}
+                    />
+                    <StatItem
+                      icon={FileDigit}
+                      label="Video ID"
+                      value={video.id}
+                    />
+                  </div>
+                </section>
+
+                <Separator />
+
+                {/* Stats Section */}
+                <section className="space-y-3">
+                  <div className="flex items-center gap-2 text-sm font-medium text-muted-foreground">
+                    <BarChart3 className="h-4 w-4" />
+                    <span>Engagement Statistics</span>
+                  </div>
+                  <div className="grid grid-cols-2 gap-3">
+                    <StatItem
+                      icon={Play}
+                      label="Views"
+                      value={formatNumber(video.stats?.playCount || 0)}
+                      subValue={formatNumberFull(video.stats?.playCount || 0)}
+                    />
+                    <StatItem
+                      icon={Heart}
+                      label="Likes"
+                      value={formatNumber(video.stats?.diggCount || 0)}
+                      subValue={formatNumberFull(video.stats?.diggCount || 0)}
+                    />
+                    <StatItem
+                      icon={MessageCircle}
+                      label="Comments"
+                      value={formatNumber(video.stats?.commentCount || 0)}
+                      subValue={formatNumberFull(video.stats?.commentCount || 0)}
+                    />
+                    <StatItem
+                      icon={Share2}
+                      label="Shares"
+                      value={formatNumber(video.stats?.shareCount || 0)}
+                      subValue={formatNumberFull(video.stats?.shareCount || 0)}
+                    />
+                  </div>
+
+                  {/* Engagement Rate */}
+                  {video.stats?.playCount && video.stats.playCount > 0 && (
+                    <StatItem
+                      icon={Share2}
+                      label="Engagement Rate"
+                      value={(((video.stats.diggCount + video.stats.commentCount + video.stats.shareCount) / video.stats.playCount) * 100).toFixed(2)+ "%"}
+                    />
+                  )}
+                </section>
+              </div>
+            </div>
           </div>
         </ScrollArea>
       </div>
