@@ -152,7 +152,7 @@ function VideoDetailDialog({ video }: { video: Video }) {
                         </p>
                       </div>
                       {video.isAd && (
-                        <Badge variant="secondary">Sponsored</Badge>
+                        <Badge variant="secondary">Ad</Badge>
                       )}
                     </div>
                     {video.author?.id && (
